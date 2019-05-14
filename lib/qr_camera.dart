@@ -7,8 +7,10 @@ import 'package:flutter/rendering.dart';
 import 'package:native_device_orientation/native_device_orientation.dart';
 import 'package:qr_mobile_vision/qr_mobile_vision.dart';
 
-final WidgetBuilder _defaultNotStartedBuilder = (context) => new Text("Camera Loading ...");
-final WidgetBuilder _defaultOffscreenBuilder = (context) => new Text("Camera Paused.");
+final WidgetBuilder _defaultNotStartedBuilder =
+    (context) => new Text("Camera Loading ...");
+final WidgetBuilder _defaultOffscreenBuilder =
+    (context) => new Text("Camera Paused.");
 final ErrorCallback _defaultOnError = (BuildContext context, Object error) {
   print("Error reading from camera: $error");
   return new Text("Error reading from camera...");
@@ -27,7 +29,8 @@ class QrCamera extends StatefulWidget {
     ErrorCallback onError,
     this.formats,
   })  : notStartedBuilder = notStartedBuilder ?? _defaultNotStartedBuilder,
-        offscreenBuilder = offscreenBuilder ?? notStartedBuilder ?? _defaultOffscreenBuilder,
+        offscreenBuilder =
+            offscreenBuilder ?? notStartedBuilder ?? _defaultOffscreenBuilder,
         onError = onError ?? _defaultOnError,
         assert(fit != null),
         super(key: key);
@@ -40,10 +43,6 @@ class QrCamera extends StatefulWidget {
   final ErrorCallback onError;
   final List<BarcodeFormats> formats;
 
- toggleFlash() {
-    QrMobileVision.toggleFlash();
-  }
-  
   @override
   QrCameraState createState() => new QrCameraState();
 }
@@ -100,6 +99,11 @@ class QrCameraState extends State<QrCamera> with WidgetsBindingObserver {
     })();
   }
 
+  /// This method toggles the camera flash
+  void toggleFlash() {
+    QrMobileVision.toggleFlash();
+  }
+
   /// This method can be used to manually stop the
   /// camera.
   void stop() {
@@ -116,9 +120,11 @@ class QrCameraState extends State<QrCamera> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    return new LayoutBuilder(builder: (BuildContext context, BoxConstraints constraints) {
+    return new LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints constraints) {
       if (_asyncInitOnce == null && onScreen) {
-        _asyncInitOnce = _asyncInit(constraints.maxWidth, constraints.maxHeight);
+        _asyncInitOnce =
+            _asyncInit(constraints.maxWidth, constraints.maxHeight);
       } else if (!onScreen) {
         return widget.offscreenBuilder(context);
       }
@@ -157,7 +163,8 @@ class QrCameraState extends State<QrCamera> with WidgetsBindingObserver {
               return preview;
 
             default:
-              throw new AssertionError("${details.connectionState} not supported.");
+              throw new AssertionError(
+                  "${details.connectionState} not supported.");
           }
         },
       );
@@ -189,7 +196,8 @@ class Preview extends StatelessWidget {
 
     return new NativeDeviceOrientationReader(
       builder: (context) {
-        var nativeOrientation = NativeDeviceOrientationReader.orientation(context);
+        var nativeOrientation =
+            NativeDeviceOrientationReader.orientation(context);
 
         int baseOrientation = 0;
         if (orientation != 0 && (width > height)) {
