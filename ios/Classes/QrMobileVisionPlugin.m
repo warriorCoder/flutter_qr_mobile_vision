@@ -101,6 +101,7 @@
 }
 
 - (void)toggleFlash {
+  
     if ([_captureDevice hasTorch] && [_captureDevice hasFlash]){
 
         [_captureDevice lockForConfiguration:nil];
@@ -250,10 +251,12 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     } else if ([@"stop" isEqualToString:call.method]) {
         [self stop];
         result(nil);
-    } else if ([@"toggleFlash" isEqualToString:call.method]) {
+    } 
+    else if ([@"toggleFlash" isEqualToString:call.method]) {
         [self toggleFlash];
         result(nil);
-    } else if ([@"heartbeat" isEqualToString:call.method]) {
+    } 
+    else if ([@"heartbeat" isEqualToString:call.method]) {
         [self heartBeat];
         result(nil);
     } else {
@@ -303,7 +306,6 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
 - (void)toggleFlash {
     if (_reader) {
         [_reader toggleFlash];
-        _reader = nil;
     }
 }
 
